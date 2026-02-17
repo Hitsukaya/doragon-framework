@@ -64,6 +64,85 @@ environment in minutes.
     ├── README.md
     └── LICENSE
 
+```
+doragon/
+├── bin/
+│   ├── doragon                 # main CLI (bash or compiled, your choice)
+│   └── doragonctl              # optional alias / compat
+│
+├── core/
+│   ├── lib/
+│   │   ├── logging.sh          # log levels + output formatting
+│   │   ├── os-detect.sh        # fedora/debian/alma detection
+│   │   ├── validators.sh       # validate config, permissions, paths
+│   │   ├── exec.sh             # safe exec wrapper (dry-run, confirm)
+│   │   └── io.sh               # read config, merge, defaults
+│   │
+│   ├── installers/
+│   │   ├── install.sh          # core installer
+│   │   ├── uninstall.sh
+│   │   └── upgrade.sh
+│   │
+│   ├── templates/
+│   │   ├── nginx/
+│   │   ├── fail2ban/
+│   │   └── systemd/
+│   │
+│   └── defaults/
+│       ├── doragon.conf        # default config template
+│       └── modules.conf        # default module enable states
+│
+├── modules/
+│   ├── nginx/
+│   │   ├── bin/                # module commands (called by doragon)
+│   │   │   ├── enable.sh
+│   │   │   ├── disable.sh
+│   │   │   └── status.sh
+│   │   ├── conf/
+│   │   │   └── nginx.conf.example
+│   │   ├── templates/
+│   │   └── README.md
+│   │
+│   ├── fail2ban/
+│   ├── firewall/
+│   ├── selinux/
+│   ├── sftp-toggle/
+│   └── discord-alerts/
+│
+├── systemd/
+│   ├── doragon.service
+│   ├── doragon.timer
+│   ├── doragon-discord.service
+│   └── doragon-discord.timer
+│
+├── conf/
+│   ├── doragon.conf.example
+│   ├── doragon.env.example     # secrets live here (600 perms)
+│   └── modules.d/
+│       ├── nginx.conf.example
+│       ├── fail2ban.conf.example
+│       └── discord.conf.example
+│
+├── docs/
+│   ├── QUICKSTART.md
+│   ├── SECURITY.md
+│   ├── MODULES.md
+│   └── BUSINESS-EDITION.md
+│
+├── tests/
+│   ├── smoke/
+│   └── integration/
+│
+├── packaging/
+│   ├── rpm/
+│   └── deb/
+│
+├── Makefile
+├── LICENSE
+└── README.md
+
+```
+
 ---
 
 ## 3. Core Principles
