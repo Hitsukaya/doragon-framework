@@ -116,4 +116,4 @@ WordPress developers - Small SaaS startups
 
 ## Author
 
-Valentin Hitsukaya
+Valentaizar Hitsukaya
