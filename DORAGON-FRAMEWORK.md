@@ -1,4 +1,4 @@
-# 🐉 DORAGON FRAMEWORK
+# DORAGON FRAMEWORK
 
 ## Enterprise Server Security & Automation Stack
 
