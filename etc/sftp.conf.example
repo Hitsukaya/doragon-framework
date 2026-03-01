@@ -1,0 +1,3 @@
+# Doragon SFTP Toggle config
+DORAGON_SFTP_TARGET="/home/user/"
+DORAGON_SFTP_USER="user"

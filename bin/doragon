@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LIB_DIR="/usr/libexec/doragon/lib"
+OUTPUT_DIR_DEFAULT="/var/lib/doragon/output"
+
+# Source Doragon Lib
+source "${LIB_DIR}/common.sh"
+source "${LIB_DIR}/checks.sh"
+source "${LIB_DIR}/report.sh"
+source "${LIB_DIR}/fail2ban.sh"
+source "${LIB_DIR}/ssh.sh"
+source "${LIB_DIR}/selinux.sh"
+source "${LIB_DIR}/firewall.sh"
+source "${LIB_DIR}/network.sh"
+source "${LIB_DIR}/services.sh"
+source "${LIB_DIR}/helper.sh"
+source "${LIB_DIR}/sftp.sh"
+source "${LIB_DIR}/config.sh"
+source "${LIB_DIR}/discord.sh"
+source "${LIB_DIR}/status.sh"
+
+doragon_load_config || true
+doragon_print_header
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  doragon status
+  doragon report [--json] [--out <dir>]
+  doragon version
+  doragon --help
+
+  - Fail2Ban -
+  doragon f2b status [<jail>]
+  doragon f2b bans [N]
+  doragon f2b nginx-errors [N]
+  doragon f2b tail
+  doragon f2b unban-set  f2b-name
+
+  - SSH Audit -
+  doragon ssh audit
+
+  - Selinux -
+  doragon selinux status
+  doragon selinux avc today
+  doragon selinux avc count
+  doragon selinux avc summary
+  doragon selinux avc grep <pattern>
+  doragon selinux avc services
+  doragon selinux avc allow
+
+  - Firewall -
+  doragon fw zones
+  doragon fw rich [--zone public]
+  doragon fw iptables
+  doragon fw ip6tables
+
+  - Network -
+  doragon net ports
+  doragon net ip
+
+  - Services Status  -
+  doragon svc nginx
+  doragon svc php-fpm
+  doragon svc mariadb
+  doragon svc postgresql
+  doragon svc status <name>
+  doragon svc running [--full]
+
+  - Timers Status -
+  doragon timers
+  doragon timers status <name>
+
+  - Helper -
+  doragon helper
+
+  - SFT Toggle ON/OFF & Status -
+  doragon sftp config --user name --target /home/user
+  doragon sftp on
+  doragon sftp off
+  doragon sftp check
+  doragon sftp status
+
+  - Discord -
+  doragon discord dashboard [--test|--force]
+  doragon discord send "<message>"
+  doragon discord test
+  doragon discord status
+
+Notes:
+  - Supported OS: AlmaLinux 9.x
+  - SSH port auto-detected from sshd configuration
+USAGE
+}
+
+ensure_root_if_needed() {
+  local primary="$1"
+  shift
+  case "$primary" in
+    status|report|doctor)
+      if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+        if sudo -n true 2>/dev/null; then
+          exec sudo "$0" "$primary" "$@"
+        else
+          echo "Doragon requires elevated privileges for full diagnostics."
+          echo "Run: sudo doragon $primary $*"
+          exit 2
+        fi
+      fi
+      ;;
+  esac
+}
+
+cmd="${1:-}"
+shift || true
+
+ensure_root_if_needed "$cmd" "$@"
+
+case "${cmd}" in
+  status)
+    doragon_status
+    ;;
+  report)
+    doragon_report_cmd "$@"
+    ;;
+  ssh)
+   if [[ "${1:-}" == "audit" ]] && [[ ${EUID:-$(id -u)} -ne 0 ]]; then
+     exec sudo "$0" ssh audit
+   fi
+   doragon_ssh_cmd "$@"
+  ;;
+  version)
+    doragon_version
+    ;;
+  f2b|fail2ban)
+    doragon_f2b_cmd "$@"
+    ;;
+ selinux)
+   doragon_selinux_cmd "$@"
+   ;;
+  fw|firewall)
+    doragon_fw_cmd "$@"
+    ;;
+  net|network)
+    doragon_net_cmd "$@"
+    ;;
+  svc|service|services)
+    doragon_svc_cmd "$@"
+    ;;
+  timers|timer)
+    doragon_timers_cmd "$@"
+    ;;
+  helper)
+   doragon_helper_cmd "$@"
+    ;;
+  sftp)
+    doragon_sftp_cmd "$@"
+    ;;
+  discord)
+    doragon_discord_cmd "$@"
+    ;;
+  -h|--help|"")
+    usage
+    exit 0
+    ;;
+  *)
+    die "Unknown command: ${cmd}. Run: doragon --help"
+    ;;
+esac
