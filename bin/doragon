@@ -60,13 +60,15 @@ Usage:
   doragon net ports
   doragon net ip
 
-  - Services Status  -
+  - Services -
   doragon svc nginx
   doragon svc php-fpm
   doragon svc mariadb
   doragon svc postgresql
+  doragon svc redis
   doragon svc status <name>
   doragon svc running [--full]
+  doragon svc  --help
 
   - Timers Status -
   doragon timers
