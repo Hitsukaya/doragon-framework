@@ -11,7 +11,7 @@ security framework for Linux VPS servers.
 Doragon Framework is a deterministic CLI-based security orchestration layer for AlmaLinux systems.
 It enforces layered security controls using native Linux mechanisms without container abstraction.
 
-# v1.0.2 Enterprise Architecture & Technical Documentation
+# v1.0.4 Enterprise Architecture & Technical Documentation
 
 ## 2. Architectural Overview
 
