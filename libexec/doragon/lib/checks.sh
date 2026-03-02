@@ -143,7 +143,7 @@ mariadb_socket_present() {
   [[ -S /var/lib/mysql/mysql.sock ]]
 }
 
-maridb_public_listen() {
+mariadb_public_listen() {
   is_port_public_bind 3306
 }
 
