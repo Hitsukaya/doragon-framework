@@ -1,9 +1,13 @@
 # Doragon Framework
  
-> Powered by Hitsukaya
 [![Hitsukaya](https://img.shields.io/badge/Hitsukaya-red)](https://hitsukaya.com)
 ![Type](https://img.shields.io/badge/type-self--hosted%20framework-blue)
 ![Focus](https://img.shields.io/badge/focus-security%20%2B%20low%20overhead-success)
+[![Powered by Hitsukaya](https://img.shields.io/badge/Hitsukaya-Framework-red)](https://hitsukaya.com)
+![Language](https://img.shields.io/badge/language-bash-blue)
+![Platform](https://img.shields.io/badge/platform-Linux-orange)
+![Focus](https://img.shields.io/badge/security-first-success)
+![Dependencies](https://img.shields.io/badge/dependencies-native%20linux-success)
 
 **STABILITY • SIMPLICITY • SECURE BY ARCHITECTURE**
 
