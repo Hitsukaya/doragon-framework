@@ -1,20 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LIB_DIR="/usr/libexec/doragon/lib"
-F2B_DIR="${LIB_DIR}/f2b"
-
-[[ -d "$F2B_DIR" ]] || { echo "[ERR] missing dir: $F2B_DIR" >&2; return 1; }
-
-source "${F2B_DIR}/engine_f2b.sh"
-source "${F2B_DIR}/status.sh"
-source "${F2B_DIR}/nginx-errors.sh"
-source "${F2B_DIR}/tail.sh"
-source "${F2B_DIR}/bans.sh"
-source "${F2B_DIR}/unban_global.sh"
-source "${F2B_DIR}/unban_jail.sh"
-source "${F2B_DIR}/unban_set.sh"
-
 doragon_f2b_usage() {
   cat <<'USAGE'
 Doragon f2b commands:

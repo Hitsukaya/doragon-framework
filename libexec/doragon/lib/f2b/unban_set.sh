@@ -17,5 +17,5 @@ doragon_f2b_unban_set() {
   $SUDO ipset test "$set_name" "$ip" >/dev/null 2>&1 || { echo "[WARN] IP $ip not found in set '$set_name'."; return 0; }
 
   $SUDO ipset del "$set_name" "$ip"
-  echo "[OK] Removed $ip from ipset '$set_name'"
+  info "[OK] Removed $ip from ipset '$set_name'"
 }

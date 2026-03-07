@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LIB_DIR="/usr/libexec/doragon/lib"
-SVC_DIR="/usr/libexec/doragon/lib/svc"
-
-source "${SVC_DIR}/status.sh"
-source "${SVC_DIR}/reload.sh"
-source "${SVC_DIR}/restart.sh"
-source "${SVC_DIR}/start.sh"
-source "${SVC_DIR}/stop.sh"
-source "${SVC_DIR}/enable.sh"
-source "${SVC_DIR}/disable.sh"
-
-
 doragon_svc_usage() {
   cat <<'USAGE'
 Service commands:

@@ -8,10 +8,16 @@ die() {
   exit 2
 }
 
+section() {
+  echo
+  printf "%s\n" "$1"
+  printf "%s\n" "--------"
+}
+
 ok()   { printf "[OK]    %s\n" "$*"; }
 warn() { printf "[WARN]  %s\n" "$*"; }
 fail() { printf "[FAIL]  %s\n" "$*"; }
-info() { echo "$*"; }
+info() { printf "[INFO]  %s\n" "$*"; }
 
 detect_os_pretty() {
   if [[ -r /etc/almalinux-release ]]; then
@@ -46,3 +52,26 @@ hostname_safe() { hostname 2>/dev/null || echo "unknown"; }
 kernel_safe() { uname -r 2>/dev/null || echo "unknown"; }
 uptime_short() { uptime 2>/dev/null | sed 's/^ *//'; }
 
+score_bar() {
+  local score="${1:-0}"
+  local total_blocks=20
+  local filled empty
+  local bar=""
+  local i
+
+  (( score < 0 )) && score=0
+  (( score > 100 )) && score=100
+
+  filled=$(( score * total_blocks / 100 ))
+  empty=$(( total_blocks - filled ))
+
+  for ((i=0; i<filled; i++)); do
+    bar+="█"
+  done
+
+  for ((i=0; i<empty; i++)); do
+    bar+="░"
+  done
+
+  printf '%s' "$bar"
+}

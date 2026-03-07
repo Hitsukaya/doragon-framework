@@ -317,14 +317,7 @@ doragon_discord_status() {
   local webhook
   webhook="$(doragon_discord_webhook)"
 
-  echo "Discord status"
-  echo "-------------"
-
- # if [[ -n "$webhook" ]]; then
- #   ok "Webhook: configured"
- # else
- #   warn "Webhook: NOT configured (set DORAGON_DISCORD_WEBHOOK in /etc/doragon/discord.conf)"
- # fi
+  section "Discord status"
 
   if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
     warn "Webhook: root-only (run with sudo to verify)"
@@ -348,8 +341,8 @@ doragon_discord_cmd() {
   shift || true
 
   if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
-    echo "[INFO] Discord integration uses a root-only secret in /etc/doragon/discord.conf"
-    echo "[INFO] Re-run with sudo: sudo doragon discord ${sub} $*"
+    info "Discord integration uses a root-only secret in /etc/doragon/discord.conf"
+    info "Re-run with sudo: sudo doragon discord ${sub} $*"
     exit 2
   fi
 

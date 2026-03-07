@@ -21,6 +21,71 @@ It provides a deterministic CLI-based security orchestration layer designed prim
 - SSH hardening
 - systemd services
 
+## v1.0.6 – Security Audit Improvements
+
+This release introduces a major improvement to the integrated security audit and status output.
+
+### Added
+
+- Integrated **Security Score engine**
+- Visual **security score bar**
+- **Security grade system** (SS, A+, A, B+, B, C, D, F)
+- **Security assessment messages**
+- **Top Issues detection**
+- **Next Actions recommendations**
+
+### Improved
+
+- SSH audit fully integrated into `doragon status`
+- Modular security scoring logic moved to: audit
+
+- Shared scoring engine used by:
+  - `doragon status`
+  - `doragon report`
+
+### Security Score Example
+
+SECURITY SCORE
+
+███████████████████░ 95/100
+Grade: A
+Status: WARN
+Assessment: Strong security baseline with minor adjustments recommended.
+
+
+### Top Issues
+
+Doragon now highlights important findings:
+
+Top Issues
+
+- PostgreSQL listening on public interface
+- PasswordAuthentication enabled
+
+### Next Actions
+
+Doragon also suggests remediation steps:
+Next Actions
+
+- Restrict PostgreSQL listen_addresses to localhost
+- Disable PasswordAuthentication in sshd_config if SSH keys are enforced
+
+
+### Internal Changes
+
+New audit module: audit/security_score.sh
+
+This module provides:
+
+- score calculation
+- grade mapping
+- security assessment
+- issue detection
+- remediation suggestions
+
+The score engine is now shared between CLI output and report generation.
+
+
 Doragon focuses on **minimal overhead**, **predictable behavior**, and **transparent system security auditing**.
 
 ---

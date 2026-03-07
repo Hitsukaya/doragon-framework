@@ -6,7 +6,7 @@ doragon_f2b_status() {
 
   command -v fail2ban-client >/dev/null 2>&1 || { warn "Doragon: Fail2Ban not installed."; return 1; }
 
-  echo "===== Doragon Fail2ban Status ====="
+  section "Doragon Fail2ban Status"
 
   if [[ -n "${one_jail}" ]]; then
     ${SUDO} fail2ban-client status "${one_jail}" || warn "Jail '${one_jail}' not found or not running."
@@ -22,7 +22,7 @@ doragon_f2b_status() {
   if [[ -n "${jails}" ]]; then
     local jail
     for jail in ${jails}; do
-      echo "---- ${jail} ----"
+      section "${jail}"
       ${SUDO} fail2ban-client status "${jail}" || warn "Jail '${jail}' not found or not running."
       echo
     done
@@ -31,7 +31,7 @@ doragon_f2b_status() {
 
   local jail
   for jail in "${DORAGON_F2B_JAILS_DEFAULT[@]}"; do
-    echo "---- ${jail} ----"
+    section "${jail}"
     ${SUDO} fail2ban-client status "${jail}" || warn "Jail '${jail}' not found or not running."
     echo
   done

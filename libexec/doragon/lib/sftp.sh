@@ -87,7 +87,7 @@ doragon_sftp_config_set() {
   else
     # create a minimal header if new
     cat > "$conf" <<'EOF'
-# Doragon Framework config (v1.0.1)
+
 EOF
   fi
 
@@ -123,7 +123,7 @@ doragon_sftp_on() {
   target="$(_doragon_sftp_target)"
   user="$(_doragon_sftp_user)"
 
-  echo "[+] Enabling SFTP write access for ${user} on ${target}"
+  info "[+] Enabling SFTP write access for ${user} on ${target}"
   setfacl -R -m "u:${user}:rwx" "$target"
   setfacl -R -d -m "u:${user}:rwx" "$target"
   ok "SFTP write access ENABLED"
@@ -136,7 +136,7 @@ doragon_sftp_off() {
   target="$(_doragon_sftp_target)"
   user="$(_doragon_sftp_user)"
 
-  echo "[-] Disabling SFTP write access for ${user} on ${target}"
+  info "[-] Disabling SFTP write access for ${user} on ${target}"
   setfacl -R -x "u:${user}" "$target"
   setfacl -R -k "$target"
   ok "SFTP write access DISABLED"
@@ -147,18 +147,16 @@ doragon_sftp_status() {
   target="$(_doragon_sftp_target)"
   user="$(_doragon_sftp_user)"
 
-  echo "SFTP ACL status"
-  echo "--------------"
+  section "SFTP ACL status"
   info "Target: ${target}"
   info "User:   ${user}"
   getfacl "$target" | head -n 60 || true
 
-  echo "SFTP CHECK"
-  echo "--------------"
+  section "SFTP CHECK"
   if getfacl "$target" 2>/dev/null | grep -q "user:${user}:rwx"; then
-  echo '[ON]'  "SFTP write access ENABLED for ${user}"
+  info  "SFTP write access ENABLED for ${user}"
   else
-  echo '[OFF]' "SFTP write access DISABLED for ${user}"
+  info "SFTP write access DISABLED for ${user}"
   fi
 
 }
@@ -168,9 +166,9 @@ doragon_sftp_cmd() {
   shift || true
 
   if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
-    echo "[INFO] Doragon SFTP module requires root privileges."
-    echo "[INFO] SSH configuration can only be modified by root."
-    echo "[INFO] Re-run with: sudo doragon sftp ${sub} $*"
+    info "Doragon SFTP module requires root privileges."
+    info "SSH configuration can only be modified by root."
+    info "Re-run with: sudo doragon sftp ${sub} $*"
     exit 2
   fi
 

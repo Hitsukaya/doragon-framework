@@ -19,8 +19,7 @@ selinux_mode() {
 doragon_selinux_avc_today() {
   require_cmd ausearch
 
-  echo "SELinux AVC (today)"
-  echo "-------------------"
+  section "SELinux AVC (today)"
   info "SELinux Mode: $(selinux_mode)"
 
   if ! sudo ausearch -m avc -ts today >/dev/null 2>&1; then
@@ -42,8 +41,7 @@ doragon_selinux_avc_count_today() {
 doragon_selinux_avc_summary_today() {
   require_cmd aureport
 
-  echo "SELinux AVC summary (today)"
-  echo "---------------------------"
+  section "SELinux AVC summary (today)"
   info "SELinux Mode: $(selinux_mode)"
 
   if ! sudo ausearch -m avc -ts today >/dev/null 2>&1; then
@@ -64,8 +62,8 @@ doragon_selinux_avc_grep_today() {
 
 doragon_selinux_avc_services_today() {
   require_cmd ausearch
-  echo "SELinux AVC by common services (today)"
-  echo "-------------------------------------"
+
+  section "SELinux AVC by common services (today)"
   sudo ausearch -m avc -ts today -c sh -c php -c nginx 2>/dev/null || true
 }
 
@@ -73,8 +71,7 @@ doragon_selinux_avc_allow_today() {
   require_cmd audit2allow
   require_cmd ausearch
 
-  echo "SELinux audit2allow (today)"
-  echo "---------------------------"
+  section "SELinux audit2allow (today)"
   info "WARNING: review rules before applying. This only prints suggestions."
 
   sudo ausearch -m avc -ts today 2>/dev/null | sudo audit2allow || true
