@@ -11,7 +11,9 @@
 
 **STABILITY • SIMPLICITY • SECURE BY ARCHITECTURE**
 
-Doragon Framework is a lightweight, self-hosted deployment and security framework for Linux VPS servers.
+Doragon – Linux Server Security Framework
+
+Doragon is a lightweight, self-hosted deployment and security framework for Linux VPS servers.
 
 It provides a deterministic CLI-based security orchestration layer designed primarily for RHEL-like Linux systems, enforcing layered security controls using native Linux mechanisms such as:
 
