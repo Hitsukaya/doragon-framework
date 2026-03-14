@@ -29,6 +29,38 @@ This release introduces a major improvement to the integrated security audit and
 
 ### Added
 
+## v1.0.7
+Internal improvements and security diagnostics.
+
+Status improvements:
+- Added TLS detection in doragon status
+- Added OpenSSL version detection
+- Added TLSv1.3 capability check
+- Added crypto policy detection
+- Added FIPS mode detection
+
+TLS / Crypto audit:
+- Detect TLS configuration from nginx
+- Check Let's Encrypt certificates
+- Certificate expiration detection
+
+Nginx diagnostics:
+- Detect nginx ssl_certificate paths
+- Detect orphaned certificates (existing but unused)
+- Detect missing certificates referenced by nginx
+
+Framework improvements:
+- Introduced modular directory structure
+- Added dirs.sh for directory layout
+- Added verify.sh for runtime checks
+- Added loader.sh for module loading
+
+General:
+- Improved diagnostic output
+- Better internal structure for future modules
+
+---
+## v1.0.6
 - Integrated **Security Score engine**
 - Visual **security score bar**
 - **Security grade system** (SS, A+, A, B+, B, C, D, F)
