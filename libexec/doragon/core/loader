@@ -1,0 +1,36 @@
+# ============================================================
+# Doragon Framework - Module Loader
+# Loads core modules and feature modules
+# ============================================================
+
+# core first
+for file in common.sh config.sh checks.sh; do
+    source "$CORE/$file"
+done
+
+# rest core
+for file in "$CORE"/*.sh; do
+    [ -f "$file" ] || continue
+    base="$(basename "$file")"
+    case "$base" in
+        common.sh|config.sh|checks.sh|dirs|verify|loader)
+            continue
+            ;;
+    esac
+    source "$file"
+done
+
+# flat modules
+for file in "$MODULES"/*.sh; do
+    [ -f "$file" ] || continue
+    source "$file"
+done
+
+# nested module trees
+for dir in "$MODULES"/*; do
+    [ -d "$dir" ] || continue
+    for file in "$dir"/*.sh; do
+        [ -f "$file" ] || continue
+        source "$file"
+    done
+done

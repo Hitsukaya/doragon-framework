@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DORAGON="${DORAGON:-/usr/libexec/doragon}"
+
+CORE="${DORAGON}/core"
+
+MODULES="${DORAGON}/modules"
+
+source "${CORE}/dirs"
+
+source "${CORE}/verify"
+
+source "${CORE}/loader"
+
+source "${CORE}/registry"
+

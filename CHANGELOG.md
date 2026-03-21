@@ -2,6 +2,79 @@
 
 All notable changes to this project will be documented here.
 
+## Doragon v1.0.8
+
+### Added
+
+- Introduced **bootstrap layer** for clean initialization flow  
+- Added **registry-based CLI routing system**  
+- Implemented **GDPR compliance audit command (`doragon gdpr`)**  
+- Introduced **dynamic module loading system**
+- Added **directory layout abstraction (`dirs.sh`)**
+
+---
+
+### Changed
+
+- Refactored CLI entrypoint (`/usr/bin/doragon`) to be minimal and execution-focused  
+- Migrated command routing logic from monolithic `case` into **registry system**  
+- Reorganized internal architecture:
+  - `core` → bootstrap + loader + registry
+  - `modules` → feature-based separation  
+- Improved execution flow:
+  - bootstrap → verify → load → dispatch  
+- Updated internal path handling for better portability  
+- Standardized module loading order (core first, then modules)
+
+---
+
+### Improved
+
+- Better modular separation between core and feature modules  
+- Cleaner CLI execution with reduced overhead  
+- More predictable and deterministic execution flow  
+- Improved SFTP security handling (ACL-based control)  
+- Enhanced diagnostics and status output consistency  
+
+---
+
+### Security
+
+- Added **GDPR-oriented infrastructure audit layer**
+- Improved detection of:
+  - exposed services
+  - insecure configurations
+  - public-facing databases  
+- Strengthened SFTP access control logic  
+
+---
+
+### Internal
+
+- Introduced:
+  - `bootstrap`
+  - `loader.sh`
+  - `registry`
+- Removed hardcoded module sourcing in favor of dynamic loading  
+- Prepared architecture for future binary compilation  
+- Improved maintainability and extensibility of the framework  
+
+---
+
+### Notes
+
+This release focuses on **architecture stabilization and modular design**.
+
+It lays the foundation for:
+
+- future binary builds  
+- plugin system expansion  
+- advanced diagnostics (Doragon Doctor)  
+- remote execution capabilities  
+
+---
+
+
 ## Doragon v1.0.7
 
 Internal improvements and security diagnostics.

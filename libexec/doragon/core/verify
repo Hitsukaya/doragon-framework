@@ -1,0 +1,45 @@
+doragon_verify_core() {
+    local path
+
+    for path in \
+        "$DORAGON" \
+        "$CORE" \
+        "$MODULES"
+    do
+        [[ -d "$path" ]] || {
+            echo "[ERR] missing core path: $path" >&2
+            return 1
+        }
+    done
+
+    for path in \
+        "$CORE/dirs" \
+        "$CORE/verify" \
+        "$CORE/loader" \
+        "$CORE/common.sh" \
+        "$CORE/checks.sh" \
+        "$CORE/config.sh"
+    do
+        [[ -f "$path" ]] || {
+            echo "[ERR] missing core file: $path" >&2
+            return 1
+        }
+    done
+}
+
+doragon_verify_modules() {
+    local path
+
+    for path in \
+        "$MODULES" \
+        "$AUDIT" \
+        "$F2B" \
+        "$SVC" \
+        "$DIAGNOSE"
+    do
+        [[ -d "$path" ]] || {
+            echo "[ERR] missing module path: $path" >&2
+            return 1
+        }
+    done
+}

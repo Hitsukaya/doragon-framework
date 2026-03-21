@@ -29,7 +29,7 @@ doragon_diagnose_cmd() {
         database|db)
             doragon_diagnose_database "$@"
             ;;
-        -h|--help|"")
+        -h|help|--help|"")
             doragon_diagnose_usage
             ;;
         *)

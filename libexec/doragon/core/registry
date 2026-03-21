@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+doragon_call_cli() {
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  doragon <command> [subcommand] [options]
+
+Main Commands:
+  status    Show server status
+  report    Generate report
+  diagnose  Run diagnostics
+  gdpr      GDPR compliance audit
+  version   Show version
+
+Modules:
+  f2b       Fail2Ban tools
+  selinux   SELinux tools
+  fw        Firewall tools
+  net       Network tools
+  svc       Service tools
+  timers    Systemd timers
+  sftp      SFTP control
+  discord   Discord integration
+
+Run 'doragon <module> --help' for details.
+
+USAGE
+}
+
+cmd="${1:-}"
+shift || true
+
+ensure_root_if_needed "$cmd" "$@"
+
+case "${cmd}" in
+  status)
+    doragon_status
+    ;;
+  report)
+    doragon_report_cmd "$@"
+    ;;
+  diagnose)
+    doragon_diagnose_cmd "$@"
+    ;;
+  gdpr)
+    doragon_gdpr_compliance "$@"
+    ;;
+  version)
+    doragon_version
+    ;;
+  f2b|fail2ban)
+    doragon_f2b_cmd "$@"
+    ;;
+ selinux)
+   doragon_selinux_cmd "$@"
+   ;;
+  fw|firewall)
+    doragon_fw_cmd "$@"
+    ;;
+  net|network)
+    doragon_net_cmd "$@"
+    ;;
+  svc|service|services)
+    doragon_svc_cmd "$@"
+    ;;
+  timers|timer)
+    doragon_timers_cmd "$@"
+    ;;
+  helper)
+   doragon_helper_cmd "$@"
+    ;;
+  sftp)
+    doragon_sftp_cmd "$@"
+    ;;
+  discord)
+    doragon_discord_cmd "$@"
+    ;;
+  -h|--help|"")
+    usage
+    exit 0
+    ;;
+  *)
+    die "Unknown command: ${cmd}. Run: doragon --help"
+    ;;
+esac
+
+}

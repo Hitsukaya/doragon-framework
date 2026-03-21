@@ -11,7 +11,7 @@ die() {
 section() {
   echo
   printf "%s\n" "$1"
-  printf "%s\n" "--------"
+  printf "%s\n" "═════════════════════"
 }
 
 ok()   { printf "[OK]    %s\n" "$*"; }

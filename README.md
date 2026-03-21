@@ -11,116 +11,39 @@
 
 **STABILITY • SIMPLICITY • SECURE BY ARCHITECTURE**
 
-Doragon – Linux Server Security Framework
+## Overview
 
-Doragon is a lightweight, self-hosted deployment and security framework for Linux VPS servers.
+Doragon Framework is a lightweight, self-hosted deployment and security platform designed  
+for Linux servers, hosting providers, and cloud infrastructure environments.
 
-It provides a deterministic CLI-based security orchestration layer designed primarily for RHEL-like Linux systems, enforcing layered security controls using native Linux mechanisms such as:
-
-- SELinux
-- firewalld
-- Fail2Ban
-- SSH hardening
-- systemd services
-
-## v1.0.7 – Security Audit Improvements
-
-This release introduces a major improvement to the integrated security audit and status output.
-
-### Added
-
-## v1.0.7
-Internal improvements and security diagnostics.
-
-Status improvements:
-- Added TLS detection in doragon status
-- Added OpenSSL version detection
-- Added TLSv1.3 capability check
-- Added crypto policy detection
-- Added FIPS mode detection
-
-TLS / Crypto audit:
-- Detect TLS configuration from nginx
-- Check Let's Encrypt certificates
-- Certificate expiration detection
-
-Nginx diagnostics:
-- Detect nginx ssl_certificate paths
-- Detect orphaned certificates (existing but unused)
-- Detect missing certificates referenced by nginx
-
-Framework improvements:
-- Introduced modular directory structure
-- Added dirs.sh for directory layout
-- Added verify.sh for runtime checks
-- Added loader.sh for module loading
-
-General:
-- Improved diagnostic output
-- Better internal structure for future modules
+It provides a deterministic CLI-based orchestration layer focused on system hardening, inspection, and audit — built entirely on native Linux components.
 
 ---
-## v1.0.6
-- Integrated **Security Score engine**
-- Visual **security score bar**
-- **Security grade system** (SS, A+, A, B+, B, C, D, F)
-- **Security assessment messages**
-- **Top Issues detection**
-- **Next Actions recommendations**
 
-### Improved
+## Core Philosophy
 
-- SSH audit fully integrated into `doragon status`
-- Modular security scoring logic moved to: audit
+It is a modular infrastructure framework designed to provide:
 
-- Shared scoring engine used by:
-  - `doragon status`
-  - `doragon report`
+- deterministic execution  
+- transparent system inspection  
+- minimal overhead  
+- predictable behavior  
 
-### Security Score Example
+---
 
-SECURITY SCORE
+## Key Features
 
-███████████████████░ 95/100
-Grade: A
-Status: WARN
-Assessment: Strong security baseline with minor adjustments recommended.
-
-
-### Top Issues
-
-Doragon now highlights important findings:
-
-Top Issues
-
-- PostgreSQL listening on public interface
-- PasswordAuthentication enabled
-
-### Next Actions
-
-Doragon also suggests remediation steps:
-Next Actions
-
-- Restrict PostgreSQL listen_addresses to localhost
-- Disable PasswordAuthentication in sshd_config if SSH keys are enforced
-
-
-### Internal Changes
-
-New audit module: audit/security_score.sh
-
-This module provides:
-
-- score calculation
-- grade mapping
-- security assessment
-- issue detection
-- remediation suggestions
-
-The score engine is now shared between CLI output and report generation.
-
-
-Doragon focuses on **minimal overhead**, **predictable behavior**, and **transparent system security auditing**.
+- Server status & diagnostics  
+- Fail2Ban inspection and control  
+- SELinux context and AVC analysis  
+- Firewall auditing (firewalld / iptables)  
+- SSH security inspection  
+- Service monitoring (nginx, php-fpm, mariadb, redis)  
+- Network exposure analysis  
+- System timer inspection  
+- Security score engine  
+- GDPR compliance audit  
+- Structured CLI reporting  
 
 ---
 
@@ -132,51 +55,51 @@ Doragon focuses on **minimal overhead**, **predictable behavior**, and **transpa
                 │       /usr/bin/doragon       │
                 └──────────────┬───────────────┘
                                │
-                               │
                 ┌──────────────▼───────────────┐
-                │         Doragon Core         │
-                │   command routing + modules  │
+                │        Bootstrap Layer       │
+                │   verify + init + config     │
                 └──────────────┬───────────────┘
                                │
-        ┌──────────────────────┼──────────────────────┬──────────────────────┐
-        │                      │                      │                      │
- ┌──────▼────────┐    ┌────────▼────────┐    ┌────────▼────────┐    ┌────────▼───────┐
- │   Security    │    │    Services     │    │     Network     │    │   Reporting    │
- │               │    │                 │    │                 │    │                │
- │ • SELinux     │    │ • nginx         │    │ • firewall      │    │ • status       │
- │ • Fail2Ban    │    │ • php-fpm       │    │ • ports         │    │ • report       │
- │ • SSH         │    │ • mariadb       │    │ • connectivity  │    │ • scoring      │
- │ • SFTP        │    │ • redis         │    │                 │    │                │
- └───────────────┘    └─────────────────┘    └─────────────────┘    └────────────────┘
+                ┌──────────────▼───────────────┐
+                │          Loader              │
+                │   dynamic module loading     │
+                └──────────────┬───────────────┘
                                │
+                ┌──────────────▼───────────────┐
+                │          Registry            │
+                │   CLI routing & dispatch     │
+                └──────────────┬───────────────┘
+                               │
+        ┌──────────────────────┼──────────────────────┐
+        │                      │                      │
+ ┌──────▼────────┐    ┌────────▼────────┐    ┌────────▼────────┐
+ │   Security    │    │    Services     │    │     Network     │
+ │               │    │                 │    │                 │
+ │ • SELinux     │    │ • nginx         │    │ • firewall      │
+ │ • Fail2Ban    │    │ • php-fpm       │    │ • ports         │
+ │ • SSH         │    │ • mariadb       │    │ • connectivity  │
+ │ • SFTP        │    │ • redis         │    │                 │
+ └───────────────┘    └─────────────────┘    └─────────────────┘
+                               │
+                ┌──────────────▼───────────────┐
+                │        Reporting Layer       │
+                │   status • report • scoring  │
+                └──────────────┬───────────────┘
                                │
                 ┌──────────────▼───────────────┐
                 │         System Layer         │
                 │   RHEL-like Linux systems    │
-                │   Planned support: FreeBSD   │
                 └──────────────────────────────┘
-
-
-
+```
 ---
 
-# Key Features
-
-Doragon provides a modular CLI toolkit for security inspection and server hardening.
-
-Core capabilities include:
-
-- Fail2Ban management and inspection
-- SELinux AVC analysis
-- Firewall configuration auditing
-- SSH configuration auditing
-- Service monitoring
-- Network exposure analysis
-- System timer inspection
-- Security score evaluation
-- Structured reporting
-
-The framework is designed to run **directly on the host system** without container abstraction.
+# Design Principles
+- Minimal CLI entrypoint
+- Separation between core and modules
+- Dynamic module loading
+- Deterministic execution flow
+- Security-first defaults
+- Native Linux integration
 
 ---
 
@@ -185,12 +108,10 @@ The framework is designed to run **directly on the host system** without contain
 Currently supported:
 
 - AlmaLinux 9.x
+- RHEL 9.x
 
-Future compatibility may include:
-
-- Rocky Linux
-- RHEL compatible systems
-
+Planned:
+FreeBSD (future support)
 ---
 
 # Installation
@@ -200,106 +121,40 @@ git clone https://github.com/Hitsukaya/doragon-framework.git
 cd doragon-framework
 sudo ./install.sh
 ```
-
+---
+```
 Run first security scan:
 
 ```bash
-sudo doragon status
+sudo doragon 
 ```
-
 ---
+```
+# Doragon includes a GDPR-oriented audit module designed to detect:
 
-# Example Usage
+# GDPR Compliance
 
 ```bash
-sudo doragon status
+sudo doragon gdpr
 ```
 
-Example output:
+- exposed databases
+- insecure authentication
+- publicly accessible services
+- weak infrastructure configurations
 
-```
-[OK] SELinux: Enforcing
-[OK] Firewall: running
-[OK] Fail2Ban: active (17 jails)
-[WARN] PostgreSQL listening on public interface
-
-Security Score: 95 / 100
-```
-
----
-
-# CLI Commands Overview
-
-## Core
-
-```
-doragon status
-doragon report
-doragon helper
-```
-
-## Fail2Ban
-
-```
-doragon f2b status
-doragon f2b bans
-doragon f2b nginx-errors
-doragon f2b tail
-doragon f2b unban
-doragon f2b unban-jail
-doragon f2b set-list
-doragon f2b unban-set
-```
-
-## SELinux
-
-```
-doragon selinux status
-doragon selinux avc today
-doragon selinux avc count
-doragon selinux avc summary
-doragon selinux avc grep
-```
-
-## Firewall
-
-```
-doragon fw zones
-doragon fw rich
-doragon fw iptables
-```
-
-## Network
-
-```
-doragon net ports
-doragon net ip
-```
-
-## Services
-
-```
-doragon svc nginx
-doragon svc php-fpm
-doragon svc mariadb
-doragon svc postgresql
-doragon svc redis
-doragon svc status
-```
 
 ---
 
 # Architecture Overview
 
-Execution flow:
-
-1. `/usr/bin/doragon` invoked
-2. Config loaded from `/etc/doragon/doragon.conf`
-3. CLI arguments parsed
-4. Modules executed from `/usr/libexec/doragon/lib`
-5. Reports stored in `/var/lib/doragon/output`
-6. Logs written to `/var/log/doragon`
-
+Execution Flow
+1. /usr/bin/doragon is invoked
+2. Bootstrap initializes environment
+3. Core verification is executed
+4. Modules are dynamically loaded
+5. CLI command is routed via registry
+6. Output is generated in real time
 ---
 
 # Security Model
@@ -316,34 +171,20 @@ Layers:
 
 # Directory Layout
 
-```
-/usr/bin/doragon
-/etc/doragon/
-/usr/libexec/doragon/
-/var/lib/doragon/
-/var/log/doragon/
-```
+
+1. /usr/bin/doragon
+2. /etc/doragon/
+3. /usr/libexec/doragon/core
+4. /usr/libexec/doragon/modules
+5. /var/lib/doragon/
+6. /var/log/doragon/
+
 
 ---
 
-# Versioning
+# Releases
 
-Semantic versioning:
-
-- Major → architecture
-- Minor → features
-- Patch → fixes
-
----
-
-# Roadmap
-
-Planned:
-
-- Doragon Doctor auto-remediation
-- JSON reporting
-- Extended scoring
-- Remote scan
+- See GitHub Releases for version history and changes.
 
 ---
 
@@ -355,7 +196,7 @@ MIT License
 
 # Project
 
-Doragon Framework is developed under the **Hitsukaya** ecosystem.
+Doragon Framework is part of the Hitsukaya ecosystem.
 
 https://hitsukaya.com
 
@@ -364,8 +205,8 @@ https://hitsukaya.com
 
 ## Production testing
 
-Doragon has been running on a production VPS since February 2026,
-supporting a multi-site environment with several web applications.
+Doragon has been running on a production, supporting a multi-site 
+environment with several web applications.
 
 This real-world deployment helps validate:
 

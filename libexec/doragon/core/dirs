@@ -3,10 +3,13 @@
 # Defines internal module directories
 # ============================================================
 
-F2B_DIR="${LIB_DIR}/f2b"
-AUDIT_DIR="${LIB_DIR}/audit"
-SVC_DIR="${LIB_DIR}/svc"
-DIAGNOSE_DIR="${LIB_DIR}/diagnose"
+CORE="${DORAGON}/core"
+MODULES="${DORAGON}/modules"
+
+F2B="${MODULES}/f2b"
+AUDIT="${MODULES}/audit"
+SVC="${MODULES}/svc"
+DIAGNOSE="${MODULES}/diagnose"
 
 # OUTPUT DIR DEFAULT REPORT
 OUTPUT_DIR_DEFAULT="/var/lib/doragon/output"
